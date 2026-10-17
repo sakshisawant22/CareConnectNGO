@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Support CareConnect and help children learn, grow, and dream bigger." />
+    <title>Donate | CareConnect NGO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="donation-page">
+    <div class="announcement"><span>✦</span> Small acts. Big futures. <a href="index.html#get-involved">Join our community of changemakers →</a></div>
+    <header class="site-header">
+      <a class="brand" href="index.html#home" aria-label="CareConnect home"><span class="brand-mark">♡</span><span>care<span>connect</span></span></a>
+      <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">☰</button>
+      <nav class="main-nav" aria-label="Primary navigation">
+        <a href="index.html#home">Home</a><a href="index.html#about">About us</a><a href="index.html#programs">Our work</a><a href="index.html#impact">Impact</a><a href="index.html#stories">Stories</a><a class="active" href="donation.html">Donate</a>
+      </nav>
+      <a class="button button-small header-cta" href="#donate-form">Give now <span>↗</span></a>
+    </header>
+
+    <main>
+      <section class="donation-hero section-shell">
+        <div><p class="eyebrow"><span class="eyebrow-dot"></span> Give with purpose</p><h1>Make a gift that helps a child <em>shine.</em></h1><p>Every donation helps create a safer, brighter path for children through education, nourishment, clothing, and welcoming spaces.</p></div>
+        <div class="donation-hero-art"><span>₹</span><p>When we give<br />together, hope<br /><em>grows.</em></p></div>
+      </section>
+
+      <section class="donation-content section-shell">
+        <form class="donation-form" id="donate-form">
+          <p class="eyebrow">Your contribution</p><h2>Choose how you’d like to help</h2>
+          <div class="donation-type-grid"><label class="donation-type selected"><input type="radio" name="type" value="Money" checked /><span>₹</span><strong>Money</strong><small>Fund education</small></label><label class="donation-type"><input type="radio" name="type" value="Food" /><span>🍲</span><strong>Food</strong><small>Feed a learner</small></label><label class="donation-type"><input type="radio" name="type" value="Clothes" /><span>🧥</span><strong>Clothes</strong><small>Share essentials</small></label><label class="donation-type"><input type="radio" name="type" value="Space" /><span>🏫</span><strong>Space</strong><small>Build a classroom</small></label></div>
+          <div class="donation-amounts"><button type="button">₹500</button><button type="button" class="selected">₹1,000</button><button type="button">₹2,500</button><button type="button">₹5,000</button></div>
+          <label class="custom-amount">Custom amount<input type="number" min="1" placeholder="Enter amount in ₹" /></label>
+          <label>Your name<input required type="text" placeholder="Your name" /></label><label>Your email<input required type="email" placeholder="you@example.com" /></label>
+          <label class="privacy-check"><input type="checkbox" /> Show my name in the supporter list</label>
+          <button class="button" type="submit">Continue securely <span>↗</span></button><p class="donation-message" aria-live="polite"></p><small class="secure-note">This is a demo donation form. No payment details are stored.</small>
+        </form>
+        <aside class="donor-panel"><div class="donor-panel-heading"><div><p class="eyebrow">Community of care</p><h2>Our supporters</h2></div><span>52 donors</span></div><p class="donor-intro">These generous people chose to make their support visible and inspire others to join them.</p><div class="donor-list"><div class="donor-row"><span class="donor-avatar">AS</span><div><strong>Ananya Sharma</strong><small>Education fund</small></div><b>₹5,000</b></div><div class="donor-row"><span class="donor-avatar avatar-blue">RK</span><div><strong>Rohan Kapoor</strong><small>Learning space</small></div><b>₹2,500</b></div><div class="donor-row"><span class="donor-avatar avatar-pink">MS</span><div><strong>Meera Shah</strong><small>Food & nutrition</small></div><b>₹1,000</b></div><div class="donor-row"><span class="donor-avatar avatar-yellow">PN</span><div><strong>Priya Nair</strong><small>Clothes & essentials</small></div><b>₹1,000</b></div><div class="donor-row"><span class="donor-avatar avatar-mint">DV</span><div><strong>Dev Varma</strong><small>Education fund</small></div><b>₹500</b></div></div><p class="donor-privacy">Names are shown only with the donor’s permission. You can always give anonymously.</p></aside>
+      </section>
+    </main>
+    <footer class="site-footer"><div class="section-shell footer-grid"><div><a class="brand brand-light" href="index.html#home"><span class="brand-mark">♡</span><span>care<span>connect</span></span></a><p>Helping every child find<br />their own bright path.</p></div><div><p class="footer-label">Explore</p><a href="index.html#about">About us</a><a href="index.html#programs">Our work</a><a href="index.html#impact">Our impact</a></div><div><p class="footer-label">Connect</p><a href="donation.html">Donate</a><a href="mailto:hello@careconnect.org">hello@careconnect.org</a></div><div class="footer-signup"><p class="footer-label">Stay in the loop</p><p>Stories of hope, sent occasionally.</p><div class="email-input"><input type="email" placeholder="Your email address" aria-label="Email address" /><button aria-label="Subscribe">→</button></div></div></div><div class="section-shell footer-bottom"><span>© 2026 CareConnect NGO</span><span>Made with care for every child.</span></div></footer>
+    <script src="donation.js"></script>
+  </body>
+</html>
