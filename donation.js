@@ -23,3 +23,28 @@ document.querySelector("#donate-form").addEventListener("submit", (event) => {
   message.textContent = `Thank you — your ${type.toLowerCase()} donation is ready to continue.`;
   event.currentTarget.querySelector(".button").textContent = "Thank you for caring ✓";
 });
+
+const donorModal = document.querySelector("#donorModal");
+const showDonorList = document.querySelector("#showDonorList");
+const closeDonorList = document.querySelector("#closeDonorList");
+
+const openDonorList = () => {
+  donorModal.classList.add("open");
+  donorModal.setAttribute("aria-hidden", "false");
+  closeDonorList.focus();
+};
+
+const hideDonorList = () => {
+  donorModal.classList.remove("open");
+  donorModal.setAttribute("aria-hidden", "true");
+  showDonorList.focus();
+};
+
+showDonorList.addEventListener("click", openDonorList);
+closeDonorList.addEventListener("click", hideDonorList);
+donorModal.addEventListener("click", (event) => {
+  if (event.target === donorModal) hideDonorList();
+});
+document.addEventListener("keydown", (event) => {
+  if (event.key === "Escape" && donorModal.classList.contains("open")) hideDonorList();
+});
