@@ -45,7 +45,7 @@ document.querySelectorAll(".tracker-tab").forEach((tab) => {
     document.querySelector(".tracker-tab.active").classList.remove("active");
     tab.classList.add("active");
     const category = tab.dataset.category;
-    document.querySelectorAll(".tracker-item").forEach((item) => {
+    document.querySelectorAll(".tracker-card").forEach((item) => {
       item.classList.toggle("hidden", category !== "all" && item.dataset.category !== category);
     });
   });
