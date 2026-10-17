@@ -1,5 +1,36 @@
 const typeOptions = document.querySelectorAll(".donation-type");
 const amountOptions = document.querySelectorAll(".donation-amounts button");
+const donorListFull = document.querySelector("#donorListFull");
+const donorListPreview = document.querySelector("#donorListPreview");
+const donorCount = document.querySelector("#donorCount");
+const storedDonors = JSON.parse(localStorage.getItem("careconnectDonors") || "[]");
+
+const donorColorClasses = ["", "avatar-blue", "avatar-pink", "avatar-yellow", "avatar-mint"];
+const readDonorRows = (list) => [...list.querySelectorAll(".donor-row")].map((row) => ({
+  name: row.querySelector("strong").textContent,
+  cause: row.querySelector("small").textContent,
+  amount: row.querySelector("b").textContent
+}));
+const donors = storedDonors.length ? storedDonors : readDonorRows(donorListFull);
+
+const renderDonor = (donor, index) => {
+  const row = document.createElement("div");
+  row.className = "donor-row";
+  const initials = donor.name.split(/\s+/).map((part) => part[0]).join("").slice(0, 2).toUpperCase();
+  row.innerHTML = `<span class="donor-avatar ${donorColorClasses[index % donorColorClasses.length]}">${initials}</span><div><strong></strong><small></small></div><b></b>`;
+  row.querySelector("strong").textContent = donor.name;
+  row.querySelector("small").textContent = donor.cause;
+  row.querySelector("b").textContent = donor.amount;
+  return row;
+};
+
+const renderDonorLists = () => {
+  donorListFull.replaceChildren(...donors.map(renderDonor));
+  donorListPreview.replaceChildren(...donors.slice(0, 5).map(renderDonor));
+  donorCount.textContent = `${donors.length} donors`;
+};
+
+renderDonorLists();
 
 typeOptions.forEach((option) => {
   option.addEventListener("click", () => {
@@ -20,7 +51,10 @@ document.querySelector("#donate-form").addEventListener("submit", (event) => {
   event.preventDefault();
   const form = event.currentTarget;
   const email = form.querySelector('input[type="email"]').value;
-  const amount = form.querySelector(".donation-amounts button.selected").textContent;
+  const name = form.querySelector('input[type="text"]').value.trim();
+  const customAmount = form.querySelector(".custom-amount input").value;
+  const amount = customAmount ? `₹${Number(customAmount).toLocaleString("en-IN")}` : form.querySelector(".donation-amounts button.selected").textContent;
+  const type = form.querySelector(".donation-type.selected strong").textContent;
   const accountNumber = String(Math.floor(1000000000 + Math.random() * 9000000000));
   const branchCode = String(Math.floor(1000 + Math.random() * 9000));
   const upiId = `careconnect${Math.floor(100 + Math.random() * 900)}@upi`;
@@ -33,6 +67,9 @@ document.querySelector("#donate-form").addEventListener("submit", (event) => {
   document.querySelector("#upiId").textContent = upiId;
   document.querySelector("#paymentQr").src = `https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`upi://pay?pa=${upiId}&pn=CareConnect%20Demo&am=${amount.replace(/[^\d]/g, "")}&cu=INR`)}`;
 
+  donors.unshift({ name, cause: type, amount });
+  localStorage.setItem("careconnectDonors", JSON.stringify(donors));
+  renderDonorLists();
   document.querySelector("#paymentModal").classList.add("open");
   document.querySelector("#paymentModal").setAttribute("aria-hidden", "false");
   document.querySelector("#closePayment").focus();
