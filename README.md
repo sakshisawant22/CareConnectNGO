@@ -194,3 +194,5 @@ Copy checklist My recommendation Start with authentication, education programs, 
 ## Donation demo privacy features
 
 The static donation demo supports INR, USD, EUR, GBP, AED, AUD, CAD, and SGD. Donors can log in through `login.html` to open their private profile, opt out of the public supporter list with the anonymous option, and see all donation activity linked to their email. Donation activity and the demo session are stored in the browser's `localStorage`. Money donations include a donor-only expenditure breakdown; it is never added to the public supporter record. A production implementation must replace this browser-only login/profile with authenticated server-side access controls.
+
+The site also includes a small offline helper chatbot. It answers common questions about donations, currencies, privacy, volunteering, and profiles without sending visitor messages to an external service.

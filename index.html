@@ -96,6 +96,15 @@
     <footer class="site-footer"><div class="section-shell footer-grid"><div><a class="brand brand-light" href="#home"><span class="brand-mark">♡</span><span>care<span>connect</span></span></a><p>Helping every child find<br />their own bright path.</p></div><div><p class="footer-label">Explore</p><a href="#about">About us</a><a href="#programs">Our work</a><a href="#impact">Our impact</a></div><div><p class="footer-label">Connect</p><a href="#get-involved">Get involved</a><a href="mailto:hello@careconnect.org">hello@careconnect.org</a><a href="#get-involved">Instagram ↗</a></div><div class="footer-signup"><p class="footer-label">Stay in the loop</p><p>Stories of hope, sent occasionally.</p><div class="email-input"><input type="email" placeholder="Your email address" aria-label="Email address" /><button aria-label="Subscribe">→</button></div></div></div><div class="section-shell footer-bottom"><span>© 2026 CareConnect NGO</span><span>Made with care for every child.</span></div></footer>
 
     <div class="modal" id="donateModal" aria-hidden="true"><div class="modal-panel" role="dialog" aria-modal="true" aria-labelledby="donateTitle"><button class="modal-close" id="closeModal" aria-label="Close donation form">×</button><p class="eyebrow">Give with purpose</p><h2 id="donateTitle">Your gift creates possibility.</h2><p>Choose what you would like to support.</p><label>Donation type<select id="donationType"><option>Money donation</option><option>Food donation</option><option>Clothes donation</option><option>Learning space donation</option></select></label><div class="amounts"><button>₹500</button><button class="selected">₹1,000</button><button>₹2,500</button><button>₹5,000</button></div><label>Email address<input type="email" placeholder="you@example.com" /></label><button class="button modal-submit">Continue securely <span>↗</span></button><small>Your donation will be processed securely.</small></div></div>
+    <div class="chat-widget">
+      <button class="chat-toggle" id="chatToggle" type="button" aria-expanded="false" aria-controls="chatPanel">Chat with us <span>✦</span></button>
+      <section class="chat-panel" id="chatPanel" aria-label="CareConnect helper chat">
+        <div class="chat-heading"><div><strong>CareConnect helper</strong><small>Simple answers, anytime</small></div></div>
+        <div class="chat-messages" id="chatMessages"><p class="chat-message bot">Hi! Ask me about donations, privacy, volunteering, or your profile.</p></div>
+        <form class="chat-form" id="chatForm"><input id="chatInput" type="text" placeholder="Ask a question..." aria-label="Ask a question" autocomplete="off" /><button type="submit" aria-label="Send message">→</button></form>
+      </section>
+    </div>
+    <script src="chatbot.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
