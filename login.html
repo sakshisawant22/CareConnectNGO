@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Log in to view your private CareConnect activity." />
+    <title>Log in | CareConnect NGO</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="login-page">
+    <div class="announcement"><span>✦</span> Your kindness, privately recorded.</div>
+    <header class="site-header">
+      <a class="brand" href="index.html#home" aria-label="CareConnect home"><span class="brand-mark">♡</span><span>care<span>connect</span></span></a>
+      <a class="button button-small header-cta" href="donation.html">Back to donate <span>↗</span></a>
+    </header>
+    <main class="login-shell section-shell">
+      <section class="login-intro">
+        <p class="eyebrow"><span class="eyebrow-dot"></span> Your private profile</p>
+        <h1>Welcome back to your <em>giving journey.</em></h1>
+        <p>Log in to see every donation, date, amount, and private expenditure detail connected to your account.</p>
+      </section>
+      <form class="login-card" id="loginForm">
+        <p class="eyebrow">Secure demo login</p>
+        <h2>View your activity</h2>
+        <label>Your name<input id="loginName" required type="text" placeholder="Your name" autocomplete="name" /></label>
+        <label>Email address<input id="loginEmail" required type="email" placeholder="you@example.com" autocomplete="email" /></label>
+        <label>Password<input id="loginPassword" required type="password" minlength="6" placeholder="At least 6 characters" autocomplete="current-password" /></label>
+        <button class="button" type="submit">Log in <span>→</span></button>
+        <p class="login-message" id="loginMessage" aria-live="polite"></p>
+        <small class="secure-note">This static demo keeps your login session in this browser only. Do not use a real password.</small>
+      </form>
+    </main>
+    <script src="auth.js"></script>
+  </body>
+</html>
