@@ -57,6 +57,18 @@ The implemented prototype contains:
 
 The project is intentionally implemented as a static prototype. Donation activity is stored only in the visitor's browser, and the payment screen displays demonstration details rather than processing a real payment. The project can be extended into a complete NGO management platform by adding a secure API, relational database, role-based staff portal, verified payment integration, inventory management, education-program management, volunteer administration, audit logging, and aggregate reporting.
 
+### Abstract expansion: approach and expected contribution
+
+The project follows a progressive approach. First, it establishes the public information architecture and visual language. Second, it adds the most important supporter interactions: selecting a contribution, deciding whether recognition is public, receiving next-step payment information, and reviewing activity. Third, it documents the technical and ethical boundary between a browser demonstration and a production NGO system.
+
+The expected contribution of the project is a reusable front-end foundation. A student or NGO team can use the current interface to discuss requirements with stakeholders before investing in a complete backend. The screens make abstract requirements visible: a donor can see what information is requested, a volunteer can see how participation begins, and a reviewer can see where privacy and payment controls must be strengthened.
+
+The project also demonstrates responsible technical communication. It does not claim that a local storage record is a successful payment, that a demo login is secure authentication, or that sample impact numbers are audited statistics. This distinction is essential for a system connected to charitable giving and children’s welfare.
+
+### Abstract keywords
+
+**CareConnect NGO, charitable giving, education support, responsive web design, browser-local storage, privacy by design, donation workflow, volunteer engagement, impact communication, input validation, GitHub Pages.**
+
 ---
 
 ## 2. Introduction
@@ -79,6 +91,29 @@ The source implementation is divided into three main user-facing pages:
 | `index.html` | Public mission, programs, impact, needs, volunteer form, and chatbot |
 | `donation.html` | Donation form, supporter list, payment demo, and private activity |
 | `login.html` | Demo login for accessing the browser-local supporter profile |
+
+### Development methodology
+
+The prototype was developed using an iterative, feature-oriented method:
+
+1. Define the public mission and information hierarchy.
+2. Build the landing page and reusable visual components.
+3. Add contribution categories and current-needs communication.
+4. Add the separate donation page and supporter list.
+5. Add local profile activity and the demo login flow.
+6. Add validation, modals, responsive navigation, and chatbot support.
+7. Review privacy wording and separate implemented features from future scope.
+8. Configure static deployment through GitHub Pages.
+
+This method keeps the most visible user journey working at every stage and makes it easier to replace individual browser-only behaviors with API calls in a later version.
+
+### Assumptions
+
+- All sample donors, impact figures, stories, and payment values are synthetic.
+- The prototype is used for academic demonstration and interface review.
+- Visitors understand that the payment screen is a demonstration.
+- No real child, donor, volunteer, or bank information is entered during testing.
+- A production organization will define its own policies for consent, retention, reporting, and safeguarding.
 
 ---
 
@@ -120,6 +155,26 @@ The current prototype addresses the public communication problem, but not the co
 
 These are identified as future requirements rather than falsely represented as current features.
 
+### Problem impact
+
+If a public NGO website does not clearly communicate its work, visitors may abandon the page before taking action. If contribution instructions are unclear, donors may not understand what their support enables. If privacy controls are hidden, users may avoid participation. If impact figures are not explained, the public may find them difficult to trust.
+
+CareConnect addresses these communication impacts with a single journey:
+
+```text
+Understand the mission
+        ↓
+Explore programs and needs
+        ↓
+Choose a way to help
+        ↓
+Review privacy and contribution details
+        ↓
+Receive feedback and next steps
+```
+
+The prototype does not solve the organization’s internal data problem yet. Instead, it exposes that problem clearly so the next system design can address it with a database, service layer, permissions, and auditability.
+
 ---
 
 ### 2.3 Purpose, Objectives and Goals
@@ -153,6 +208,19 @@ The purpose of CareConnect is to demonstrate a warm, transparent, and usable NGO
 | Self-service support | Keyword-based helper chatbot |
 | Deployment | GitHub Pages workflow |
 
+### Success criteria
+
+The prototype can be considered successful when:
+
+- A first-time visitor can explain the NGO’s purpose after reading the landing page.
+- A donor can select a contribution type and amount without external instructions.
+- An anonymous donor is not added to the visible supporter list.
+- A signed-in demo user can find activity associated with the same email.
+- A volunteer receives immediate confirmation after a valid form submission.
+- A visitor can ask common questions without leaving the current page.
+- The interface remains usable at desktop and mobile widths.
+- Reviewers can identify which features are demo-only and which are future production requirements.
+
 ---
 
 ### 2.4 Literature Survey
@@ -174,6 +242,25 @@ The prototype demonstrates data minimization by storing only a small browser-loc
 #### Secure payment design
 
 Production payment systems should use a hosted payment provider or tokenized integration. Card numbers, CVVs, passwords, and payment credentials must not be stored in this front end. Payment confirmation must come from a verified provider webhook rather than from a browser event.
+
+#### Progressive disclosure and form design
+
+Donation forms should ask only for information needed at the current step. CareConnect first presents contribution type and amount, then identity and privacy choices, and finally payment instructions. This reduces the initial cognitive load and gives the user a meaningful explanation before any next step.
+
+#### Transparency and trust
+
+Trust is supported through visible progress indicators, donor-consent language, private-profile explanations, and demo warnings. In a production system, these signals should be supported by operational evidence such as dated reports, reconciliation status, payment-provider references, and a published data-use notice.
+
+#### Relevance to this project
+
+The survey principles influence concrete implementation decisions:
+
+- Native form controls are used before custom validation.
+- `aria-live` regions are provided for changing messages.
+- User-entered text is inserted with `textContent`.
+- Anonymous giving is an explicit choice.
+- Private activity is described separately from public recognition.
+- Production recommendations avoid storing payment secrets in the browser.
 
 #### NGO transparency
 
@@ -213,6 +300,14 @@ Public impact data should be aggregate, dated, and supported by a documented met
 - Expense management and reconciliation.
 - Volunteer screening and approval.
 - Verified financial reporting.
+
+#### Quality boundaries
+
+The scope boundary is itself a quality feature. A small, honest prototype is more useful than a larger interface that implies unsupported security or financial guarantees. The current project therefore prioritizes a complete public journey over unfinished administrative screens.
+
+#### Future scope boundary
+
+The future system may include staff operations, but those features should be introduced only after the public content, privacy language, data definitions, and authorization model are approved. Adding a database without defining ownership and retention would not solve the complete problem.
 - Server-side audit logs.
 
 ---
@@ -239,6 +334,30 @@ HTML pages
 ```
 
 The browser is the execution environment and is not an authoritative source of identity, permission, payment status, or organizational records.
+
+### System boundary
+
+The current system boundary begins when a visitor loads a page and ends when the browser displays content, updates the interface, writes demo values to local storage, or requests a QR image. There is no trusted boundary around a server because no server is included.
+
+The future system boundary should place the API between the browser and every sensitive operation. The browser may request an action, but the API must decide whether the action is allowed, validate the data, write the authoritative record, and return a result that can be audited.
+
+### Primary user journeys
+
+#### Public discovery journey
+
+The visitor reads the mission, reviews impact and programs, explores current needs, and chooses either donation or volunteering. This journey requires clear section headings, visible calls to action, and a fast path back to the main purpose of the website.
+
+#### Donation journey
+
+The donor chooses a category, currency, amount, identity details, and public-recognition preference. The browser then creates a demo activity record and shows next-step payment information. A future version will replace the local write with a payment intent and verified provider status.
+
+#### Returning supporter journey
+
+The supporter enters through the demo login page, is redirected to the private profile, and reviews contribution activity by email. A future version must replace email filtering in the browser with server-side ownership checks.
+
+#### Volunteer journey
+
+The volunteer supplies a name, email, and preferred way to help. The prototype confirms interest locally. A future version should create an application record, send a confirmation, and route the application to an authorized coordinator.
 
 ---
 
@@ -323,6 +442,19 @@ The existing implementation consists of the following surfaces:
 
 The current website must not be used for real passwords, real payment credentials, or identifiable children's information.
 
+### Operational gap analysis
+
+| Operational concern | Current prototype | Required production capability |
+|---|---|---|
+| Identity | Browser-local user object | Verified account and secure session |
+| Donations | Local activity entry | Payment intent, webhook, and reconciliation |
+| Public names | Client-side donor array | Consent record and publication policy |
+| Impact | Static HTML values | Aggregation from verified records |
+| Volunteers | Success message only | Application workflow and coordinator review |
+| Inventory | Not implemented | Transactional stock ledger |
+| Children | No records | Restricted pseudonymous program records |
+| Audit | Not implemented | Immutable administrative event history |
+
 ---
 
 ### 3.3 Project Perspective and Features
@@ -343,6 +475,30 @@ CareConnect is the public trust and engagement layer of a proposed wider NGO man
 10. **Chat support:** answers common questions using keyword matching.
 11. **Responsive UI:** adapts navigation and content layout to smaller screens.
 12. **Static deployment:** supports GitHub Pages hosting.
+
+### Feature interaction map
+
+| Feature | Main user | Input | Output | Future service |
+|---|---|---|---|---|
+| Impact section | Visitor | Navigation | Aggregate story | Public metrics API |
+| Tracker tabs | Visitor | Category click | Filtered cards | Campaign service |
+| Donation form | Donor | Type, amount, email | Payment modal | Payment service |
+| Anonymous option | Donor | Checkbox | Public/private projection | Consent service |
+| Profile | Supporter | Email | Activity summary | Account service |
+| Volunteer form | Volunteer | Contact and interest | Confirmation | Volunteer service |
+| Chatbot | Any visitor | Question | Help response | Content/help service |
+
+### Non-functional qualities
+
+The desired system qualities are:
+
+- **Usability:** visitors can understand actions without training.
+- **Accessibility:** keyboard, screen-reader, mobile, and contrast needs are considered.
+- **Transparency:** demo and verified information are distinguishable.
+- **Privacy:** only necessary data is collected and public disclosure is controlled.
+- **Maintainability:** shared styles and page-specific scripts have clear responsibilities.
+- **Scalability:** future services can replace browser-local functions without redesigning the public journey.
+- **Reliability:** future operations provide explicit loading, error, retry, and recovery states.
 
 ---
 
@@ -420,6 +576,26 @@ Future production requirements:
 - Audit logging for financial, stock, permission, and sensitive-record actions.
 - Retention, deletion, backup, and incident-response policies.
 
+#### Requirement priorities
+
+| Priority | Meaning | Examples |
+|---|---|---|
+| Must | Required for a safe first release | Secure login, verified payment, server validation |
+| Should | Important for operational usefulness | Inventory history, volunteer review, impact dashboard |
+| Could | Useful enhancement | Multi-language content, subscription updates, richer chatbot |
+| Won’t yet | Deliberately deferred | Real child records, advanced analytics, open public APIs |
+
+#### Acceptance principles
+
+Every future requirement should be accepted only when the team can answer:
+
+1. What user problem does it solve?
+2. What data does it create or expose?
+3. Who is allowed to perform the action?
+4. How is success confirmed?
+5. How is failure communicated?
+6. How is the action audited or reversed?
+
 ---
 
 ## 4. System Design
@@ -452,6 +628,43 @@ PostgreSQL database
 ```
 
 The architecture above is recommended future scope. The current repository implements only the frontend and browser-local layer.
+
+### Design principles
+
+1. **Public information first:** a visitor should understand the organization before being asked to contribute.
+2. **Specific calls to action:** contribution examples should describe what a supporter enables.
+3. **Privacy at the point of choice:** public recognition and anonymous giving should be visible beside the relevant action.
+4. **No false confirmation:** a local event must not be presented as a verified financial result.
+5. **Replaceable boundaries:** browser-local demonstrations should have a clear path to API-backed implementations.
+6. **Aggregate public reporting:** public impact should communicate outcomes without exposing protected records.
+
+### State model
+
+The current interface has a small number of visible states:
+
+```text
+Guest
+  ├─> Login form
+  └─> Public donation form
+
+Signed-in demo user
+  ├─> Profile activity found
+  ├─> Profile activity not found
+  └─> Logout
+
+Donation form
+  ├─> Valid input
+  ├─> Browser validation error
+  ├─> Anonymous activity
+  └─> Public activity
+
+Modal
+  ├─> Closed
+  ├─> Open
+  └─> Closed by button, overlay, or Escape
+```
+
+Documenting these states helps prevent incomplete future behavior, such as a payment modal with no failure state or a profile page with no empty state.
 
 ---
 
@@ -542,6 +755,28 @@ erDiagram
 ```
 
 The ERD is conceptual. The current implementation stores arrays of JSON objects rather than relational tables.
+
+#### Future data integrity rules
+
+- Every donation should have a unique identifier and an explicit status.
+- Money should use a fixed-precision numeric type rather than floating-point storage.
+- Campaign totals should be calculated from eligible, verified transactions.
+- Anonymous consent should be stored independently from the donor display projection.
+- Payment-provider references should be unique where the provider guarantees uniqueness.
+- Attendance records should use pseudonymous references and restricted access.
+- Stock changes should be written with their transaction history atomically.
+- Confirmed finance records should be adjusted or reversed, not deleted.
+- Audit events should identify the actor, action, entity, timestamp, and result.
+
+#### Data classification
+
+| Classification | Examples | Public by default? |
+|---|---|---|
+| Public content | Mission, published programs, aggregate impact | Yes, after review |
+| Supporter display | Name, cause, amount | Only with consent |
+| Private supporter data | Email, activity history | No |
+| Sensitive operational data | Child references, screening notes, finance evidence | No |
+| Secrets | Passwords, tokens, payment credentials | Never |
 
 ---
 
@@ -659,6 +894,42 @@ The interface uses a consistent design system:
 - Escape closes open modals.
 - Responsive layout supports smaller screens.
 
+### UI content and tone
+
+The interface uses short labels and supportive language so that a first-time visitor does not need to understand NGO accounting before participating. Examples such as “Give with purpose,” “A warm, healthy meal,” and “There’s a place for you here” make the actions concrete without using technical terminology.
+
+This tone should be retained in future versions, but all emotional claims must remain consistent with verified program information. Story content involving children should require documented consent and safeguarding review.
+
+### Responsive behavior plan
+
+The interface should be reviewed at:
+
+- Large desktop width for grid balance and image composition.
+- Tablet width for two-column transitions.
+- Narrow mobile width for menu behavior and form readability.
+- 200% browser zoom for text reflow.
+- Keyboard-only navigation for focus visibility.
+
+Future UI work should add visible loading, empty, error, and retry states whenever data is received from an API.
+
+### Website screenshots
+
+The following screenshots show the implemented prototype as rendered in a browser. They are included as repository-local assets so they remain available when the README is viewed on GitHub.
+
+#### Home page
+
+![CareConnect NGO home page showing the hero section, navigation, mission statement, call-to-action buttons, and children’s education image](./homepage-screenshot.png)
+
+The home page screenshot shows the announcement bar, CareConnect brand, primary navigation, hero message, “Make a difference” action, “Explore our work” link, community indicator, and the beginning of the impact section.
+
+#### Donation page
+
+![CareConnect NGO donation page showing contribution choices, currency selector, donation amounts, and supporter panel](./donation-screenshot.png)
+
+The donation page screenshot shows the contribution form, donation categories, currency selection, preset amounts, donor information fields, privacy option, and community supporter panel.
+
+> Screenshots contain demonstration content only. Names, impact figures, donation values, and payment details must not be interpreted as verified NGO records.
+
 ---
 
 ## 5. Implementation Details
@@ -702,6 +973,131 @@ The interface uses a consistent design system:
 - Creates demonstration payment information.
 - Opens and closes payment and donor-list modals.
 
+### Donation page features
+
+The donation page is the main supporter-action page in the prototype. It is designed to answer three questions quickly:
+
+1. **What can I contribute?**
+2. **How much can I contribute?**
+3. **What happens after I submit the form?**
+
+#### Contribution categories
+
+The page provides four contribution types:
+
+| Category | Purpose shown to the visitor |
+|---|---|
+| Money | Fund education |
+| Food | Feed a learner |
+| Clothes | Share essentials |
+| Space | Build a classroom |
+
+The selected category is represented through a visual selected state. The category name is then included in the browser-local activity record and supporter display when public recognition is permitted.
+
+#### Currency and amount features
+
+The page supports:
+
+- INR — Indian rupee.
+- USD — US dollar.
+- EUR — Euro.
+- GBP — Pound sterling.
+- AED — UAE dirham.
+- AUD — Australian dollar.
+- CAD — Canadian dollar.
+- SGD — Singapore dollar.
+
+Visitors can choose a preset amount or enter a custom amount. Preset buttons use INR base values and are reformatted for the selected currency. The conversion rates are fixed demonstration values and must not be used for real financial settlement.
+
+#### Donor information and privacy
+
+The form requests:
+
+- Donor name.
+- Donor email.
+- Anonymous-giving preference.
+
+The anonymous option controls public recognition. When selected, the contribution is stored in the private browser-local activity list but is not added to the visible supporter list. When it is not selected, the donor name, category, and displayed amount can be added to the public list.
+
+The page explains that private activity is saved only in the current browser and that supporter names are displayed only with permission.
+
+#### Private profile and activity
+
+The private profile section allows a signed-in demo user to:
+
+- See their name and avatar initials.
+- See the email associated with the browser-local profile.
+- Enter a donation email.
+- View the total amount recorded in the browser.
+- View the number of contributions.
+- View contribution category and date.
+- See a demonstration expenditure explanation for money contributions.
+
+The profile is not a secure account. A future backend must replace browser filtering with authenticated, server-side ownership checks.
+
+#### Payment details modal
+
+After a valid donation form submission, the page opens a payment details modal containing:
+
+- Demo account name.
+- Demo bank name.
+- Generated demo account number.
+- Generated demo IFSC-like value.
+- Generated demo UPI identifier.
+- QR-code image request.
+- Email notice.
+- Done button.
+
+This modal is a next-step demonstration only. It does not confirm that money was received, does not verify a payment provider, and must not be used with real financial credentials.
+
+#### Supporter list
+
+The donation page provides:
+
+- A preview of visible supporters.
+- A donor count.
+- A full supporter-list modal.
+- Category and amount information.
+- A privacy note explaining public recognition.
+
+The list is rendered from initial demonstration rows or browser-local donor entries. A production list must be generated from consented records and verified donation status.
+
+#### Donation page user flow
+
+```text
+Open Donate page
+        ↓
+Choose contribution category
+        ↓
+Choose currency and preset/custom amount
+        ↓
+Enter name and email
+        ↓
+Choose public or anonymous recognition
+        ↓
+Submit valid form
+        ↓
+Save demo activity locally
+        ↓
+Optionally update supporter list
+        ↓
+Open payment details modal
+```
+
+#### Donation page validation
+
+The page validates required name and email fields through native browser validation. Custom amounts use numeric input, a minimum of one, and a decimal step. The profile lookup validates the entered email before searching activity.
+
+Future validation must also include:
+
+- Server-side amount validation.
+- Currency allow-list validation.
+- Duplicate-submission protection.
+- Payment-intent status checks.
+- Provider webhook verification.
+- Rate limiting.
+- Consent timestamp and audit record.
+
 ### Login implementation
 
 `auth.js`:
@@ -721,6 +1117,105 @@ The interface uses a consistent design system:
 - Adds user and bot messages.
 - Matches keywords for donation, currency, privacy, profile, volunteering, and greeting questions.
 - Uses a safe fallback for unsupported questions.
+
+### Chatbot features
+
+The CareConnect helper is a lightweight, deterministic chatbot embedded on the home, donation, and login pages. It provides immediate answers to common visitor questions without requiring an external AI service or backend.
+
+#### Chatbot interface
+
+The chatbot includes:
+
+- A “Chat with us” toggle button.
+- An expandable chat panel.
+- A helper title and short status message.
+- A scrollable message area.
+- A question input field.
+- A send button.
+- User and bot message styling.
+- Automatic focus on the input when the panel opens.
+- `aria-expanded` and `aria-controls` state on the toggle.
+
+#### Supported topics
+
+| Topic | Example question | Response purpose |
+|---|---|---|
+| Donations | “How can I donate?” | Explains money, food, clothes, and spaces |
+| Currency | “Which currencies are accepted?” | Lists supported demonstration currencies |
+| Anonymous giving | “Can I donate privately?” | Explains public-list permission |
+| Profile | “How do I view my activity?” | Explains login and private activity |
+| Volunteering | “How can I help?” | Suggests volunteering and fundraising |
+| Greeting | “Hello” or “Hi” | Introduces the helper |
+| Unsupported topic | Any other question | Shows a safe supported-topic fallback |
+
+#### Chatbot processing flow
+
+```text
+User opens chat
+        ↓
+Input receives focus
+        ↓
+User enters a question
+        ↓
+Question is trimmed and normalized
+        ↓
+Privacy keywords are checked first
+        ↓
+Other keyword groups are searched
+        ↓
+Matching response or safe fallback is displayed
+        ↓
+Input is cleared for the next question
+```
+
+#### Privacy and safety behavior
+
+The chatbot does not send questions to a server or external AI service. User and bot messages are inserted as text rather than interpreted as HTML. This prevents a question containing markup from being rendered as page content.
+
+The chatbot should not be used to collect passwords, payment information, child information, or confidential donor details. It is an informational helper only.
+
+#### Current chatbot limitations
+
+- It uses keyword matching rather than natural-language understanding.
+- It cannot access account, donation, or campaign records.
+- It cannot process a donation.
+- It cannot escalate to a human coordinator.
+- It does not support multilingual responses.
+- It does not store conversation history.
+- It does not measure unanswered questions.
+
+#### Future chatbot improvements
+
+A production version could add:
+
+- Content-managed responses.
+- Frequently asked question administration.
+- Multilingual support.
+- Human-support escalation.
+- Consent-based analytics.
+- Abuse and rate-limit controls.
+- Context-aware links to programs and donation campaigns.
+- Accessibility testing for announcements and focus behavior.
+- Clear disclosure when an answer is automated.
+
+The chatbot should remain separate from financial authorization and should never be allowed to approve payments, expose private records, or make unverified impact claims.
+
+### Error-handling strategy
+
+The current prototype uses native browser validation, short inline messages, and safe fallback chatbot responses. It does not yet have network or server error states because the primary workflows are local.
+
+The future application should distinguish:
+
+- Invalid user input.
+- Authentication failure.
+- Permission denial.
+- Payment rejection.
+- Provider timeout.
+- Database failure.
+- Empty result.
+- Temporary service unavailability.
+
+Each error should explain what happened, avoid exposing internal details, and give the user a safe next action.
 
 ---
 
@@ -759,6 +1254,19 @@ The interface uses a consistent design system:
 
 These technologies are recommendations for the future system and are not currently present in this repository.
 
+### Browser compatibility and deployment assumptions
+
+The prototype assumes a modern browser with support for:
+
+- ES6 JavaScript syntax.
+- DOM event listeners.
+- `localStorage`.
+- CSS Grid and Flexbox.
+- Native form constraint validation.
+- `aria-*` attributes.
+
+The deployment workflow assumes that the repository root is safe to publish as a static artifact. Before production deployment, secrets, private files, test exports, and internal documentation must be excluded from the public artifact.
+
 ---
 
 ## 6. System Outputs and Validation
@@ -782,6 +1290,27 @@ The system produces visual and interaction outputs rather than server-generated 
 - GitHub Pages deployment artifact.
 
 Validation should confirm both functionality and truthfulness. A local storage write is not a payment confirmation, a demo login is not secure authentication, and a static campaign value is not an audited financial report.
+
+### Validation levels
+
+1. **Static review:** inspect page structure, labels, links, scripts, and deployment configuration.
+2. **Functional review:** execute forms, modals, tracker filters, login, profile, and chatbot interactions.
+3. **Responsive review:** test desktop, tablet, mobile, zoom, and orientation changes.
+4. **Accessibility review:** test keyboard navigation, focus states, announcements, labels, contrast, and dialog behavior.
+5. **Privacy review:** confirm anonymous behavior, demo warnings, absence of child data, and no password persistence.
+6. **Production security review:** required before any backend or real-payment launch.
+
+### Test data policy
+
+Testing should use values such as:
+
+```text
+Name: Demo Supporter
+Email: supporter@example.com
+Password: Example123
+```
+
+Testers must not use a personal password, active bank details, a real payment QR code, or a child’s identifying information.
 
 ---
 
@@ -880,6 +1409,19 @@ Browser validation can be bypassed and must never be the only validation for pro
 | V-08 | Empty chat message | No new message |
 | V-09 | HTML-like chat input | Rendered as text |
 
+#### Recommended automated test groups
+
+| Test group | Examples |
+|---|---|
+| Unit | Currency formatting, category matching, activity filtering |
+| Component | Donation type selection, tracker tabs, chat toggle |
+| Form | Required fields, email format, custom amount, password length |
+| Privacy | Anonymous donor not rendered publicly |
+| Navigation | Header links, profile redirect, logout |
+| Accessibility | Labels, focus, keyboard Escape, live messages |
+| End-to-end | Visitor-to-donation and login-to-profile journeys |
+| Deployment smoke | Published pages and workflow artifact |
+
 ---
 
 ### 6.3 Report Format
@@ -928,6 +1470,16 @@ An authorized internal report should include:
 
 Confirmed financial transactions should not be silently deleted. Corrections should use reversals or adjustments with audit history.
 
+#### Report generation principles
+
+- Report titles should state the reporting period.
+- Amounts should include currency.
+- Counts should define whether they are unique, total, scheduled, or completed.
+- Every public metric should have a source and last-updated date.
+- Reports should identify whether figures are verified, estimated, or illustrative.
+- Private exports should require authorization and should be logged.
+- CSV or PDF downloads should not expose fields outside the requesting user’s role.
+
 ---
 
 ## 7. Conclusion and Recommendations, Limitations & Future Scope
@@ -937,6 +1489,12 @@ Confirmed financial transactions should not be silently deleted. Corrections sho
 CareConnect successfully demonstrates a coherent public-facing NGO web experience. It communicates the organization’s mission, presents programs and needs, supports multiple contribution categories, provides volunteer engagement, and gives users a visible privacy choice.
 
 The project is strongest as a front-end and interaction prototype. Its design creates a useful foundation for a larger system because the public content and user journey are already separated into clear surfaces.
+
+From an academic perspective, the project demonstrates the complete path from a social problem to a software artifact. The requirements are visible in the page structure, the design is visible in the visual system and models, and the implementation is visible in the HTML, CSS, and JavaScript files. The validation section defines how the behavior can be checked rather than treating visual completion as proof of correctness.
+
+From an engineering perspective, the project also demonstrates an important limitation: a polished interface cannot replace an authoritative backend. The next stage must focus on data integrity, identity, authorization, payment verification, privacy, and reporting before additional visual features are added.
+
+From an NGO perspective, the public experience provides a useful starting point for stakeholder discussions. Staff can review whether the programs, needs, stories, and privacy language accurately represent the organization before a production system is commissioned.
 
 ### Recommendations
 
@@ -951,6 +1509,21 @@ The project is strongest as a front-end and interaction prototype. Its design cr
 9. Conduct legal and child-safeguarding review before collecting real data.
 10. Deploy only with HTTPS, secret management, backups, monitoring, and an incident-response process.
 
+### Recommended implementation order
+
+The recommendations should be delivered in the following order:
+
+1. Define verified metrics, donor consent, data retention, and safeguarding policies.
+2. Create the backend schema and migration process.
+3. Implement secure authentication and role permissions.
+4. Replace local donation activity with payment intents and provider verification.
+5. Add staff workflows for programs, volunteers, inventory, and expenses.
+6. Connect public impact cards to approved aggregate queries.
+7. Add automated tests and deployment quality gates.
+8. Perform security, accessibility, privacy, and operational review.
+
+This order reduces the risk of building public reporting on top of untrusted or undefined data.
+
 ### Limitations
 
 - No backend server.
@@ -963,6 +1536,18 @@ The project is strongest as a front-end and interaction prototype. Its design cr
 - Browser storage can be inspected or modified.
 - External images and QR service may be unavailable.
 - Static impact numbers are demonstration data.
+
+### Risk register
+
+| Risk | Impact | Mitigation |
+|---|---|---|
+| Browser data is modified | Incorrect activity or donor display | Move authority to a server |
+| Payment is misunderstood | Financial or reputational harm | Use provider verification and clear status labels |
+| Static impact is treated as verified | Loss of public trust | Add sources, dates, and methodology |
+| Child data is exposed | Safeguarding and legal harm | Minimize data and restrict access |
+| External QR service fails | Donation journey interruption | Use a trusted provider and fallback state |
+| Shared CSS change breaks pages | Regression | Add browser smoke tests |
+| Unauthorized staff access | Data exposure | Role-based access and audit logs |
 
 ### Future Scope
 
@@ -1009,6 +1594,22 @@ The project is strongest as a front-end and interaction prototype. Its design cr
 - Backups and recovery testing.
 - Dependency and vulnerability management.
 - Controlled production deployment.
+
+### Proposed future success measures
+
+The future platform should measure:
+
+- Percentage of public figures with a documented source.
+- Payment reconciliation completion rate.
+- Failed or abandoned donation rate.
+- Time taken to review volunteer applications.
+- Number of unresolved low-stock alerts.
+- API error rate and response time.
+- Accessibility issues found and resolved.
+- Privacy requests completed within policy timelines.
+- Percentage of sensitive actions with audit events.
+
+These measures should be used for improvement, not as vanity statistics. Each measure needs a clear owner, definition, and review period.
 
 ---
 
